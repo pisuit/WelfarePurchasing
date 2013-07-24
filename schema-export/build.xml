@@ -1,0 +1,26 @@
+<project name="schema-export" default="schemaexport" basedir=".">
+	<property name="source.dir" value="${basedir}/../JavaSource" />
+	<property name="build.dir" value="${basedir}/../WebContent/WEB-INF/classes" />
+	<property name="library.dir" value="${basedir}/../WebContent/WEB-INF/lib" />
+	<property name="hibernate.dir" value="${basedir}/../WebContent/WEB-INF/lib" />
+
+
+	<path id="hibernate.classpath">
+		<path>
+			<pathelement location="${hibernate.dir}/hibernate3.jar" />
+			<fileset dir="${library.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${hibernate.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<pathelement path="${build.dir}" />
+		</path>
+	</path>
+
+	<target name="schemaexport">
+		<taskdef name="schemaexport" classname="org.hibernate.tool.hbm2ddl.SchemaExportTask" classpathref="hibernate.classpath" />
+		<schemaexport config="${source.dir}/hibernate.cfg.xml" quiet="no" text="yes" drop="no" delimiter=" ;" output="schema-export-oracle.ddl">
+		</schemaexport>
+	</target>
+</project>

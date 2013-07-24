@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="hibernate.session_factory_name">java:/hibernate/session_factory</property>
+<!--		<property name="hibernate.connection.datasource">java:jdbc/OracleDB/dev/wfsuser</property>-->
+		<property name="hibernate.connection.datasource">java:jdbc/OracleDB/qas/welfarepurchasing</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
+		<property name="jta.UserTransaction">UserTransaction</property>
+		<property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
+		<property name="connection.charSet">tis620</property>
+		
+<!--		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>-->
+<!--  		<property name="hibernate.connection.url">jdbc:mysql://localhost/welfarepurchasing</property>-->
+<!--  		<property name="hibernate.connection.username">root</property>-->
+<!-- 	 	<property name="hibernate.connection.password">term13773</property>-->
+<!--  		<property name="hibernate.connection.pool_size">10</property>-->
+<!--  		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>-->
+<!--  		<property name="hibernate.hbm2ddl.auto">update</property>-->
+
+		<!-- SQL dialect -->
+<!--		<property name="dialect">org.hibernate.dialect.SybaseDialect</property>-->
+		<property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<!-- <property name="current_session_context_class">thread</property>-->
+		<property name="current_session_context_class">jta</property>
+		
+		<!-- Disable the second-level cache  -->
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to stdout -->
+<!--		<property name="show_sql">true</property>-->
+		<property name="format_sql">true</property>
+		<!-- Mappings -->
+		<mapping resource="Mappings.hbm.xml" />
+
+	</session-factory>
+
+</hibernate-configuration>
+

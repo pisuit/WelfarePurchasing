@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>WelfarePurchasing</display-name>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.richfaces.SKIN</param-name>
+		<param-value>darkX</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.richfaces.CONTROL_SKINNING</param-name>
+		<param-value>enable</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.richfaces.CONTROL_SKINNING_LEVEL</param-name>
+		<param-value>extended</param-value>
+	</context-param>
+	 <context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>welfare.filter.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/welcome.jsf</url-pattern>
+		<url-pattern>/budgetmain.jsf</url-pattern>
+		<url-pattern>/budgetdetail.jsf</url-pattern>
+		<url-pattern>/budgetadmin.jsf</url-pattern>
+		<url-pattern>/budgetexpense.jsf</url-pattern>
+		<url-pattern>/budgettransferrequest.jsf</url-pattern>
+		<url-pattern>/budgettransferapprove.jsf</url-pattern>
+		<url-pattern>/purchasingadmin.jsf</url-pattern>
+		<url-pattern>/purchasingmatgroup.jsf</url-pattern>
+		<url-pattern>/purchasingmat.jsf</url-pattern>
+		<url-pattern>/purchasingvendor.jsf</url-pattern>
+		<url-pattern>/purchasingpr.jsf</url-pattern>
+		<url-pattern>/purchasingpo.jsf</url-pattern>
+		<url-pattern>/purchasinggr.jsf</url-pattern>
+		<url-pattern>/purchasinggi.jsf</url-pattern>
+		<url-pattern>/purchasingmovement.jsf</url-pattern>
+		<url-pattern>/logadmin.jsf</url-pattern>
+		<url-pattern>/editor.jsf</url-pattern>
+	</filter-mapping>
+	<filter>
+		<display-name>RichFaces Filter</display-name>
+		<filter-name>richfaces</filter-name>
+		<filter-class>org.ajax4jsf.Filter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>richfaces</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>			
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- Faces Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>/index.jsp</welcome-file>
+	</welcome-file-list>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+</web-app>

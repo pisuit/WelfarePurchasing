@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.jsp" PATH="/login.jsp"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.jsp:0" NAME="item" PATH="/login.jsp" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="SUCCESS:#{login.login}:#welcome.jsp"
+    NAME="output" PATH="/welcome.jsp" TARGET="rules:#welcome.jsp"
+    TITLE="#{login.login}:SUCCESS" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#welcome.jsp" PATH="/welcome.jsp"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="LOGOUT:#{login.logout}:#login.jsp"
+    NAME="output" PATH="/login.jsp" TARGET="rules:#login.jsp"
+    TITLE="#{login.logout}:LOGOUT" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="LOGIN::#login.jsp" NAME="output1"
+    PATH="/login.jsp" TARGET="rules:#login.jsp" TITLE="LOGIN" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_HOME::#welcome.jsp" NAME="output2"
+    PATH="/welcome.jsp" TARGET="rules:#welcome.jsp" TITLE="MENU_HOME" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_BUDGET_MAIN::#budgetmain.jsp"
+    NAME="output3" PATH="/budgetmain.jsp" TARGET="rules:#budgetmain.jsp"
+    TITLE="MENU_BUDGET_MAIN" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_BUDGET_DETAIL::#budgetdetail.jsp"
+    NAME="output4" PATH="/budgetdetail.jsp"
+    TARGET="rules:#budgetdetail.jsp" TITLE="MENU_BUDGET_DETAIL" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_BUDGET_TRANSFER_REQUEST::#budgettransferrequest.jsp"
+    NAME="output5" PATH="/budgettransferrequest.jsp"
+    TARGET="rules:#budgettransferrequest.jsp"
+    TITLE="MENU_BUDGET_TRANSFER_REQUEST" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_BUDGET_TRANSFER_APPROVE::#budgettransferapprove.jsp"
+    NAME="output6" PATH="/budgettransferapprove.jsp"
+    TARGET="rules:#budgettransferapprove.jsp"
+    TITLE="MENU_BUDGET_TRANSFER_APPROVE" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_BUDGET_EXPENSE::#budgetexpense.jsp"
+    NAME="output7" PATH="/budgetexpense.jsp"
+    TARGET="rules:#budgetexpense.jsp" TITLE="MENU_BUDGET_EXPENSE" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_BUDGET_ADMIN::#budgetadmin.jsp"
+    NAME="output8" PATH="/budgetadmin.jsp"
+    TARGET="rules:#budgetadmin.jsp" TITLE="MENU_BUDGET_ADMIN" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_PURCHASING_ADMIN::#purchasingadmin.jsp"
+    NAME="output9" PATH="/purchasingadmin.jsp"
+    TARGET="rules:#purchasingadmin.jsp" TITLE="MENU_PURCHASING_ADMIN" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_STOCK_MATGROUP::#stockmatgroup.jsp"
+    NAME="output10" PATH="/stockmatgroup.jsp"
+    TARGET="rules:#stockmatgroup.jsp" TITLE="MENU_STOCK_MATGROUP" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_STOCK_MAT::#stockmat.jsp"
+    NAME="output11" PATH="/stockmat.jsp" TARGET="rules:#stockmat.jsp"
+    TITLE="MENU_STOCK_MAT" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_PURCHASING_VENDOR::#purchasingvendor.jsp" NAME="output12"
+    PATH="/purchasingvendor.jsp" TARGET="rules:#purchasingvendor.jsp"
+    TITLE="MENU_PURCHASING_VENDOR" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_PURCHASING_PR:#{menu.pr}:#purchasingpr.jsp" NAME="output13"
+    PATH="/purchasingpr.jsp" TARGET="rules:#purchasingpr.jsp"
+    TITLE="#{menu.pr}:MENU_PURCHASING_PR" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_PURCHASING_PO:#{menu.po}:#purchasingpo.jsp" NAME="output14"
+    PATH="/purchasingpo.jsp" TARGET="rules:#purchasingpo.jsp"
+    TITLE="#{menu.po}:MENU_PURCHASING_PO" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_PURCHASING_GR:#{menu.gr}:#purchasinggr.jsp" NAME="output15"
+    PATH="/purchasinggr.jsp" TARGET="rules:#purchasinggr.jsp"
+    TITLE="#{menu.gr}:MENU_PURCHASING_GR" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="MENU_STOCK_MOVEMENT:#{menu.movement}:#stockmovement.jsp"
+    NAME="output16" PATH="/stockmovement.jsp"
+    TARGET="rules:#stockmovement.jsp"
+    TITLE="#{menu.movement}:MENU_STOCK_MOVEMENT" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_STOCK_GI:#{menu.gi}:#purchasinggi.jsp"
+    NAME="output17" PATH="/purchasinggi.jsp"
+    TARGET="rules:#purchasinggi.jsp" TITLE="#{menu.gi}:MENU_STOCK_GI" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_HELP_MANUAL::#manual.jsp"
+    NAME="output18" PATH="/manual.jsp" TARGET="rules:#manual.jsp"
+    TITLE="MENU_HELP_MANUAL" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_STOCK_MINIMUM::#stockminimum.jsp"
+    NAME="output19" PATH="/stockminimum.jsp"
+    TARGET="rules:#stockminimum.jsp" TITLE="MENU_STOCK_MINIMUM" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_LOG::#logadmin.jsp" NAME="output20"
+    PATH="/logadmin.jsp" TARGET="rules:#logadmin.jsp" TITLE="MENU_LOG" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="MENU_STOCK_ADMIN::#stockadmin.jsp"
+    NAME="output21" PATH="/stockadmin.jsp"
+    TARGET="rules:#stockadmin.jsp" TITLE="MENU_STOCK_ADMIN" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#budgetmain.jsp" PATH="/budgetmain.jsp"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#budgetdetail.jsp" PATH="/budgetdetail.jsp"
+  SHAPE="256,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#budgetadmin.jsp" PATH="/budgetadmin.jsp"
+  SHAPE="288,241,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#manual.jsp" PATH="/manual.jsp"
+  SHAPE="320,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#budgettransferapprove.jsp"
+  PATH="/budgettransferapprove.jsp" SHAPE="320,785,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#budgettransferrequest.jsp"
+  PATH="/budgettransferrequest.jsp" SHAPE="320,673,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#budgetexpense.jsp" PATH="/budgetexpense.jsp"
+  SHAPE="320,897,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasingadmin.jsp"
+  PATH="/purchasingadmin.jsp" SHAPE="320,801,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasingpr.jsp" PATH="/purchasingpr.jsp"
+  SHAPE="320,897,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasingpo.jsp" PATH="/purchasingpo.jsp"
+  SHAPE="320,897,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasingvendor.jsp"
+  PATH="/purchasingvendor.jsp" SHAPE="320,929,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasinggr.jsp" PATH="/purchasinggr.jsp"
+  SHAPE="320,961,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#stockmovement.jsp" PATH="/stockmovement.jsp"
+  SHAPE="320,993,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#purchasinggi.jsp" PATH="/purchasinggi.jsp"
+  SHAPE="320,1057,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#logadmin.jsp" PATH="/logadmin.jsp"
+  SHAPE="320,1121,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#stockadmin.jsp" PATH="/stockadmin.jsp"
+  SHAPE="320,1153,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#stockminimum.jsp" PATH="/stockminimum.jsp"
+  SHAPE="320,1153,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#stockmat.jsp" PATH="/stockmat.jsp"
+  SHAPE="320,1265,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#stockmatgroup.jsp" PATH="/stockmatgroup.jsp"
+  SHAPE="320,1153,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

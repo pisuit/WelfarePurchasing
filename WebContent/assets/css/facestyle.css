@@ -1,0 +1,168 @@
+#wrapper { /*float:left;*/
+	clear: both;
+	height: 0px;
+	/*width: 0px;*/
+}
+
+/* Style for component */
+.data {
+	float: left;
+	font-weight: bold;
+	color: #000000;
+	text-align: left;
+	width: 150px;
+	border: 1px solid #DFA5A5;
+	height: 18px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.data.number {
+	text-align: right;
+}
+
+.label {
+	float: left;
+	width: 75px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+.label.small {
+	float: left;
+	width: 50px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+.label.medium {
+	width: 125px;
+}
+
+.label.custom {
+	width: 140px;
+}
+
+.label.long {
+	width: 175px;
+}
+
+.input {
+	float: left;
+	width: 100px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.input.number {
+	text-align: right;
+}
+
+.input.medium {
+	width: 150px;
+}
+
+.input.long {
+	width: 175px;
+}
+
+.input.verylong {
+	width: 250px;
+}
+
+.button {
+	float: left;
+	width: 50px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.button.short {
+	width: 75px;
+}
+
+.button.meduim {
+	width: 100px;
+}
+
+.button.long {
+	width: 125px;
+}
+
+.button.verylong {
+	width: 150px;
+}
+
+/* Style for rice components */
+.rich-messages {
+	border: 1px solid red;
+	margin: 5px;
+	padding: 5px;
+	text-align: left;
+}
+
+.rich-messages-label {
+	color: red;
+	font-size: 13px;
+	margin-left: 5px;
+}
+
+.rich-message-label {
+	color: red;
+	font-size: 0.9em;
+	margin-left: 5px;
+}
+
+.rich-mpnl-text {
+	text-align: left;
+	boder: 1px solid red;
+}
+
+.rich-mpnl-body {
+	text-align: left;
+}
+
+.level2 {
+	margin-left: 10px;
+}
+
+.level3 {
+	margin-left: 20px;
+}
+
+.level4 {
+	margin-left: 30px;
+}
+
+.odd-row {
+	background-color: #FCFFFE;
+}
+
+.even-row {
+	background-color: #ECF3FE;
+}
+
+.active-row {
+	background-color: #FFEBDA !important;
+	cursor: pointer;
+}
+
+.odd-row:hover {
+	background-color: #FFEBDA;
+	cursor: pointer;
+}
+
+.even-row:hover {
+	background-color: #FFEBDA;
+	cursor: pointer;
+}
+
+.rich-table-subheader {
+	background-color: #C9E0F5;
+}
+
+.footer_right .rich-table-footer .rich-table-footercell {
+	text-align: right !important;
+}

@@ -1,0 +1,543 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	  <typedef name="status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.Status</param>
+	  </typedef>
+	  <typedef name="po_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.POStatus</param>
+	  </typedef>
+	  <typedef name="pr_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.PRStatus</param>
+	  </typedef>
+	   <typedef name="pr_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.PRType</param>
+	  </typedef>
+	  <typedef name="po_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.POType</param>
+	  </typedef>
+	   <typedef name="gr_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.GRType</param>
+	  </typedef>
+	  <typedef name="gr_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.GRStatus</param>
+	  </typedef>
+	  <typedef name="gi_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.GIStatus</param>
+	  </typedef>
+	  <typedef name="gi_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.GIType</param>
+	  </typedef>
+	  <typedef name="movement_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.MovementType</param>
+	  </typedef>
+	  <typedef name="movement_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.MovementStatus</param>
+	  </typedef>
+	  <typedef name="lot_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.LotStatus</param>
+	  </typedef>
+	  <typedef name="buget_transfer_status" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.BudgetTransferStatus</param>
+	  </typedef>
+	  <typedef name="budget_item_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.BudgetItemType</param>
+	  </typedef>
+	  <typedef name="storage_location" class='welfare.persistent.customtype.GenericEnumUserType'>
+	      <param name="enumClass">welfare.persistent.customtype.StorageLocation</param>
+	  </typedef>
+	  <typedef name="log_type" class='welfare.persistent.customtype.GenericEnumUserType'>
+	  	  <param name="enumClass">welfare.persistent.customtype.LogType</param>
+	  </typedef>
+
+	<!-- Class section -->
+	<!-- Start Personal Section -->
+	<class name="welfare.persistent.domain.hr.Department" table="DEPARTMENT" schema="human">
+
+		<id name="id" column="DEPARTMENTID"/>
+		<property name="thaiShortName" column="THAISHORTNAME" />
+		<property name="thaiFullName" column="THAIFULLNAME" />
+		<property name="engShortName" column="ENGSHORTNAME" />
+		<property name="engFullName" column="ENGFULLNAME" />
+		<property name="active" column="ISACTIVE" />
+		<bag name="departmentAssignments" inverse="true" order-by="EFFECTIVEDATE">
+			<key column="DEPARTMENT_DEPARTMENTID"/>
+			<one-to-many class="welfare.persistent.domain.hr.DepartmentAssignment"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.hr.DepartmentAssignment" table="DEPARTMENTASSIGNMENT" schema="human">
+		<id name="id" column="DEPARTMENTASSIGNMENTID"/>
+		<property name="effectiveDate" column="EFFECTIVEDATE" type="date" />
+		<property name="expiredDate" column="EXPIREDDATE" type="date" />
+		<many-to-one name="employee" column="EMPLOYEE_EMPLOYEEID" />
+		<many-to-one name="department" column="DEPARTMENT_DEPARTMENTID" />
+	</class>
+	<class name="welfare.persistent.domain.hr.Employee" table="EMPLOYEE" schema="human">
+		<id name="id" column="EMPLOYEEID" />
+		<property name="employeeCode" column="EMPLOYEECODE" type="string" length="6" />
+		<property name="thaiFirstName" column="THAIFIRSTNAME" type="string" length="50" />
+		<property name="thaiLastName" column="THAILASTNAME" type="string" length="50" />
+		<property name="engFirstName" column="ENGFIRSTNAME" type="string" length="50" />
+		<property name="engLastName" column="ENGLASTNAME" type="string" length="50" />
+		<many-to-one name="namePrefix" column="NAMEPREFIX_ID" />
+		<bag name="departmentAssignments" inverse="true" order-by="EFFECTIVEDATE">
+			<key column="EMPLOYEE_EMPLOYEEID"/>
+			<one-to-many class="welfare.persistent.domain.hr.Employee"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.hr.Holiday" table="HOLIDAY" schema="human">
+		<id name="id" column="HOLIDAYID" />
+		<property name="date" column="DATE1" type="date" />
+		<property name="description" column="DESCRIPTION" type="string" length="100" />
+		<property name="insteadOfDate" column="INSTEADOFDATE" type="date" />
+	</class>
+	<class name="welfare.persistent.domain.hr.NamePrefix" table="NAMEPREFIX" schema="human">
+		<id name="id" column="ID" />
+		<property name="thaiShortName" column="THAISHORTNAME" type="string" length="50"/>
+		<property name="thaiFullName" column="THAIFULLNAME" type="string" length="50"/>
+		<property name="engShortName" column="ENGSHORTNAME" type="string" length="50"/>
+		<property name="engFullName" column="ENGFULLNAME" type="string" length="50"/>
+	</class>
+	
+	<!-- End Personal Section -->
+	
+	<!-- Start Budget Section -->
+	<class name="welfare.persistent.domain.budget.Budget" table="WFSBUDGET">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="budgetYear" column="BUDGETYEAR" type="integer"/>		
+		<property name="available" column="ISAVAILABLE" type="boolean"/>		
+		<property name="editable" column="ISEDITABLE" type="boolean"/>		
+		<bag name="budgetItems" inverse="true" order-by="ID">
+			<key column="WFBBUDGET_ID"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetItem"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.budget.BudgetItem" table="WFSBUDGETITEM">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="accountCode" column="ACCOUNTCODE" type="string" length="8"/>		
+		<property name="category" column="CATEGORY" type="string" length="500"/>		
+		<property name="initialAmount" column="INITIALAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="reservedAmount" column="RESERVEDAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="expensedAmount" column="EXPENSEDAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="transferInAmount" column="TRANSFERINAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="transferOutAmount" column="TRANSFEROUTAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="budgetType" column="BUDGETTYPE" type="budget_item_type" length="1"/>		
+		<property name="status" column="STATUS" type="status" length="15"/>		
+		<property name="available" column="ISAVAILABLE" type="boolean"/>		
+		<property name="editable" column="ISEDITABLE" type="boolean"/>		
+		<property name="controlled" column="ISCONTROLLED" type="boolean"/>		
+		<property name="monthlyBudget" column="ISMONTHLYBUDGET" type="boolean"/>		
+		<property name="purchasingBudget" column="ISPURCHASINGBUDGET" type="boolean"/>		
+		<property name="expenseEntry" column="ISEXPENSEENTRY" type="boolean"/>		
+		<property name="nurseryBudget" column="ISNURSERYBUDGET" type="boolean"/>
+		<property name="budgetLevel" column="BUDGETLEVEL" type="string" length="7"/>		
+		<many-to-one name="budget" column="WFBBUDGET_ID" />
+		<many-to-one name="parentBudgetItem" column="WFSBUDGETITEM_ID" />
+		<bag name="subBudgetItems" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetItem"/>
+		</bag>
+		<bag name="fromBudgetTransfers" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID_TO"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetTransfer"/>
+		</bag>
+		<bag name="toBudgetTransfers" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID_FROM"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetTransfer"/>
+		</bag>
+		<bag name="budgetExpenses" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetExpense"/>
+		</bag>
+		<bag name="purchaseRequisitionItems" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseRequisitionItem"/>
+		</bag>
+		<bag name="goodsReceiptItems" inverse="true" order-by="ID">
+			<key column="WFSBUDGETITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.GoodsReceiptItem"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.budget.BudgetTransfer" table="WFSBUDGETTRANSFER">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="transferNumber" column="TRANSFERNUMBER" type="integer"/>		
+		<property name="externalTransferNumber" column="EXTERNALTRANSFERNUMBER" type="string" length="10"/>		
+		<property name="requestAmount" column="REQUESTAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="approveAmount" column="APPROVEAMOUNT" type="big_decimal" scale="2"/>		
+		<property name="reason" column="REASON" type="string" length="500"/>		
+		<property name="requestDate" column="REQUESTDATE" type="date" />		
+		<property name="approveDate" column="APPROVEDATE" type="date" />	
+		<property name="oldAmount" column="OLDAMOUNT" type="big_decimal" scale="2"/>	
+		<property name="status" column="STATUS" type="buget_transfer_status" length="15"/>		
+		<many-to-one name="fromBudgetItem" column="WFBBUDGETITEM_ID_FROM" />
+		<many-to-one name="toBudgetItem" column="WFBBUDGETITEM_ID_TO" />
+		<many-to-one name="oldFromBudgetItem" column="WFBBUDGETITEM_ID_OLD_FROM" />
+		<many-to-one name="oldToBudgetItem" column="WFBBUDGETITEM_ID_OLD_TO" />
+	</class>
+	<class name="welfare.persistent.domain.budget.BudgetExpense" table="WFSBUDGETEXPENSE">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="postingDate" column="POSTINGDATE" type="date" />		
+		<property name="amount" column="AMOUNT" type="big_decimal" scale="2"/>		
+		<property name="invoiceNumber" column="INVOICENUMBER" type="string" length="20"/>		
+		<property name="detail" column="DETAIL" type="string" length="500"/>		
+		<many-to-one name="budgetItem" column="WFSBUDGETITEM_ID" />
+		<many-to-one name="vendor" column="WFSVENDOR_ID" />
+	</class>
+	<!-- End Budget Section -->
+	
+	<!-- Start Purchasing section -->
+	<class name="welfare.persistent.domain.purchasing.Vendor" table="WFSVENDOR">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="vendorNumber" column="VENDORNUMBER" type="integer"/>		
+		<property name="name" column="NAME" type="string" length="500"/>		
+		<property name="taxID" column="TAXID" type="string" length="15" />		
+		<property name="address1" column="ADDRESS1" type="string" length="200"/>		
+		<property name="address2" column="ADDRESS2" type="string" length="200"/>		
+		<property name="address3" column="ADDRESS3" type="string" length="200"/>		
+		<property name="status" column="STATUS" type="status" length="15"/>
+		<bag name="budgetExpenses" inverse="true" order-by="ID">
+			<key column="WFSVENDOR_ID"/>
+			<one-to-many class="welfare.persistent.domain.budget.BudgetExpense"/>
+		</bag>
+		<bag name="purchaseOrders" inverse="true" order-by="ID">
+			<key column="WFSVENDOR_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseOrder"/>
+		</bag>
+	</class>	
+	<class name="welfare.persistent.domain.stock.MaterialGroup" table="WFSMATERIALGROUP">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="code" column="CODE" type="string" length="2"/>		
+		<property name="description" column="DESCRIPTION" type="string" length="500"/>		
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>		
+		<property name="status" column="STATUS" type="status" length="15"/>		
+		<bag name="materials" inverse="true" order-by="ID">
+			<key column="WFPMATERIALGROUP_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.Material"/>
+		</bag>
+	</class>	
+	<class name="welfare.persistent.domain.stock.Material" table="WFSMATERIAL">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="code" column="CODE" type="string" length="4"/>		
+		<property name="description" column="DESCRIPTION" type="string" length="50"/>		
+		<property name="issueUnit" column="ISSUEUNIT" type="string" length="25"/>		
+		<property name="orderUnit" column="ORDERUNIT" type="string" length="25"/>		
+		<property name="unitConverter" column="UNITCONVERTER" type="double" scale="2"/>		
+		<property name="orderUnitPrice" column="ORDERUNITPRICE" type="big_decimal" scale="2"/>		
+		<property name="maxStock" column="MAXSTOCK" type="double" scale="2"/>		
+		<property name="minStock" column="MINSTOCK" type="double" scale="2"/>		
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>		
+		<property name="status" column="STATUS" type="status" length="15"/>		
+		<many-to-one name="materialGroup" column="WFPMATERIALGROUP_ID" />
+		<bag name="purchaseRequisitionItems" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseRequisitionItem"/>
+		</bag>
+		<bag name="purchaseOrderItems" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseOrderItem"/>
+		</bag>
+		<bag name="goodsReceiptItems" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.GoodsReceiptItem"/>
+		</bag>
+		<bag name="stockMovements" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.StockMovement"/>
+		</bag>
+		<bag name="materialLots" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.MaterialLot"/>
+		</bag>
+		<bag name="goodsIssueItems" inverse="true" order-by="ID">
+			<key column="WFSMATERIAL_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.GoodsIssueItem"/>
+		</bag>
+	</class>	
+	<class name="welfare.persistent.domain.purchasing.PurchaseRequisition" table="WFSPR">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="prNumber" column="PRNUMBER" type="integer" />
+		<property name="reason" column="REASON" type="string" length="500"/>
+		<property name="referenceDocNumber" column="REFDOCNUMBER" type="string" length="50"/>
+		<property name="requisitionerName" column="REQNAME" type="string" length="200"/>
+		<property name="requisitionerPos" column="REQPOS" type="string" length="200"/>
+		<property name="budgetYear" column="BUDGETYEAR" type="integer"/>
+		<property name="prType" column="PRTYPE" type="pr_type" length="15"/>
+		<property name="inspectorName" column="INSNAME" type="string" length="200"/>
+		<property name="inspectorPos" column="INSPOS" type="string" length="200"/>
+		<property name="approverName" column="APPNAME" type="string" length="200"/>
+		<property name="approverPos" column="APPPOS" type="string" length="200"/>	
+		<property name="postingDate" column="POSTINGDATE" type="date"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>		
+		<property name="status" column="STATUS" type="pr_status" length="15"/>
+		<bag name="purchaseRequisitionItems" inverse="true" order-by="ID">
+			<key column="WFSPR_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseRequisitionItem"/>
+		</bag>
+		<bag name="purchaseOrders" inverse="true" order-by="ID">
+			<key column="WFSPR_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseOrder"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.purchasing.PurchaseRequisitionItem" table="WFSPRITEM">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="itemNumber" column="ITEMNUMBER" type="int" length="10"/>
+	    <property name="otherMaterial" column="OTHERMAT" type="string" length="500"/>
+		<property name="quantity" column="QUANTITY" type="big_decimal" scale="2"/>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="orderUnit" column="ORDERUNIT" type="string" length="10"/>
+		<property name="deliveryDate" column="DELIVERYDATE" type="date"/>
+		<property name="budgetReservedAmount" column="BUDGETRESERVEDAMOUNT" type="big_decimal" scale="2"/>
+		<many-to-one name="purchaseRequisition" column="WFSPR_ID"/>	
+		<many-to-one name="material" column="WFSMATERIAL_ID"/>
+		<many-to-one name="budgetItem" column="WFSBUDGETITEM_ID"/>
+	</class>
+	<class name="welfare.persistent.domain.purchasing.PurchaseOrder" table="WFSPO">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="poNumber" column="PONUMBER" type="int" length="8"/>
+		<property name="budgetYear" column="BUDGETYEAR" type="integer"/>
+		<property name="poType" column="POTYPE" type="po_type" length="15"/>
+		<property name="reason" column="REASON" type="string" length="500"/>
+		<property name="buyerName" column="BUYNAME" type="string" length="200"/>
+		<property name="receiverName" column="RECNAME" type="string" length="200"/>
+		<property name="requisitionerName" column="REQNAME" type="string" length="200"/>
+		<property name="requisitionerPos" column="REQPOS" type="string" length="200"/>
+		<property name="inspectorName" column="INSNAME" type="string" length="200"/>
+		<property name="inspectorPos" column="INSPOS" type="string" length="200"/>
+		<property name="approverName" column="APPNAME" type="string" length="200"/>
+		<property name="approverPos" column="APPPOS" type="string" length="200"/>
+		<property name="postingDate" column="POSTINGDATE" type="date"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>		
+		<property name="status" column="STATUS" type="po_status" length="15"/>
+		<property name="otherVendor" column="OTHERVENDOR" type="string" length="500"/>
+		<many-to-one name="purchaseRequisition" column="WSFSPR_ID"/>
+		<many-to-one name="vendor" column="WFSVENDOR_ID"/>
+		<bag name="purchaseOrderItems" inverse="true" order-by="ID">
+			<key column="WFSPO_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.PurchaseOrderItem"/>
+		</bag>
+		<bag name="goodsReceipts" inverse="true" order-by="ID">
+			<key column="WFSPO_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.GoodsReceipt"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.purchasing.PurchaseOrderItem" table="WFSPOITEM">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="itemNumber" column="ITEMNUMBER" type="int" length="10"/>
+	    <property name="otherMaterial" column="OTHERMAT" type="string" length="500"/>
+		<property name="quantity" column="QUANTITY" type="big_decimal" scale="2"/>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="orderUnit" column="ORDERUNIT" type="string" length="10"/>
+		<property name="deliveryDate" column="DELIVERYDATE" type="date"/>
+		<property name="receivedQuantity" column="RECQTY" type="big_decimal" scale="2"/>
+		<property name="budgetReservedAmount" column="BUDGETRESERVEDAMOUNT" type="big_decimal" scale="2"/>
+		<many-to-one name="purchaseOrder" column="WFSPO_ID"/>	
+		<many-to-one name="material" column="WFSMATERIAL_ID"/>
+		<many-to-one name="budgetItem" column="WFSBUDGETITEM_ID"/>
+	</class>
+	<class name="welfare.persistent.domain.purchasing.GoodsReceipt" table="WFSGR">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="grNumber" column="GRNUMBER" type="int" length="8"/>
+		<property name="budgetYear" column="BUDGETYEAR" type="integer"/>
+		<property name="reason" column="REASON" type="string" length="500"/>		
+		<property name="invoiceNumber" column="INVNUMBER" type="string" length="30"/>
+		<property name="grType" column="GRTYPE" type="gr_type" length="15"/>
+		<property name="receivedDate" column="RECDATE" type="date"/>
+		<property name="postingDate" column="POSTINGDATE" type="date"/>
+		<property name="recipientName" column="RECNAME" type="string" length="200"/>
+		<property name="recipientPos" column="RECPOS" type="string" length="200"/>
+		<property name="entryName" column="ENTNAME" type="string" length="200"/>
+		<property name="entryPos" column="ENTPOS" type="string" length="200"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="totalDiscountAmount" column="TOTALDISC" type="big_decimal" scale="2"/>
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>		
+		<property name="status" column="STATUS" type="gr_status" length="15"/>
+		<bag name="goodsReceiptItems" inverse="true" order-by="ID">
+			<key column="WFSGR_ID"/>
+			<one-to-many class="welfare.persistent.domain.purchasing.GoodsReceiptItem"/>
+		</bag>
+		<many-to-one name="purchaseOrder" column="WFSPO_ID"/>		
+	</class>
+	<class name="welfare.persistent.domain.purchasing.GoodsReceiptItem" table="WFSGRITEM">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="itemNumber" column="ITEMNUMBER" type="int" length="10"/>
+	    <property name="otherMaterial" column="OTHMAT" type="string" length="500"/>
+		<property name="orderQty" column="ORDQTY" type="big_decimal" scale="2"/>
+		<property name="receivedQty" column="RECQTY" type="big_decimal" scale="2"/>
+		<property name="orderUnitPrice" column="ORDUNITPRICE" type="big_decimal" scale="2"/>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="receiveUnit" column="RECEIVEUNIT" type="string" length="10"/>
+		<property name="budgetExpensedAmount" column="BUDEXPENSEDAMT" type="big_decimal" scale="2"/>
+		<property name="storageLocation" column="STORAGELOC" type="storage_location" length="25"/>
+		<property name="totalprice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="discountAmount" column="DISCAMOUNT" type="big_decimal" scale="2"/>
+		<property name="netPrice" column="NETPRICE" type="big_decimal" scale="2"/>
+		<property name="avgPrice" column="AVGPRICE" type="big_decimal" scale="2"/>
+		<many-to-one name="goodsReceipt" column="WFSGR_ID"/>	
+		<many-to-one name="material" column="WFSMATERIAL_ID"/>
+		<many-to-one name="budgetItem" column="WFSBUDGETITEM_ID"/>
+		<bag name="stockMovements" inverse="true" order-by="ID">
+			<key column="WFSGRITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.StockMovement"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.stock.MaterialLot" table="WFSMATERIALLOT">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="totalQty" column="TOTALQTY" type="big_decimal" scale="2"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="availableQty" column="AVAILABLEQTY" type="big_decimal" scale="2"/>
+		<property name="createdDate" column="CREATEDDATE" type="date"/>
+		<property name="warehouse" column="WAREHOUSE" type="string" length="15"/>		
+		<property name="storageLocation" column="STORAGELOC" type="storage_location" length="25"/>
+		<property name="status" column="STATUS" type="lot_status" length="15"/>
+		<many-to-one name="material" column="WFSMATERIAL_ID" />
+		<bag name="stockMovements" inverse="true" order-by="ID">
+			<key column="WFSMATERIALLOT_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.StockMovement"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.stock.StockMovement" table="WFSSTOCKMOVEMENT">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="movementDate" column="MOVEMENTDATE" type="date" />
+		<property name="totalQty" column="TOTALQTY" type="big_decimal" scale="2"/>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="movementSign" column="MOVEMENTSIGN" type="integer" />
+		<property name="movementType" column="MOVEMENTTYPE" type="movement_type" length="25"/>
+		<property name="remark" column="MOVEMENTREMARK" type="string" length="100"/>
+		<property name="status" column="STATUS" type="movement_status" length="15"/>
+		<property name="warehouse" column="WAREHOUSE" type="string" length="15"/>		
+		<property name="storageLocation" column="STORAGELOC" type="storage_location" length="25"/>
+		<many-to-one name="material" column="WFSMATERIAL_ID" />
+		<many-to-one name="materialLot" column="WFSMATERIALLOT_ID" />
+		<many-to-one name="goodsReceiptItem" column="WFSGRITEM_ID" />
+		<many-to-one name="goodsIssueItem" column="WFSGIITEM_ID" />
+		
+	</class>
+	<class name="welfare.persistent.domain.stock.GoodsIssue" table="WFSGI">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="giNumber" column="GINUMBER" type="integer" />
+		<property name="reason" column="REASON" type="string" length="500"/>		
+		<property name="status" column="STATUS" type="gi_status" length="15"/>
+		<property name="amount" column="AMOUNT" type="big_decimal" scale="2"/>
+		<property name="issuedDate" column="ISSUEDATE" type="date"/>
+		<property name="issuerName" column="ISSUERNAME" type="string" length="200"/>
+		<property name="issueType" column="ISSUETYPE" type="gi_type" length="15"/>
+		<property name="warehouse" column="WAREHOUSE" type="string" length="15"/>		
+		<property name="storageLocation" column="STORAGELOC" type="storage_location" length="25"/>
+		<bag name="goodsIssueItems" inverse="true" order-by="ID">
+			<key column="WFSGI_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.GoodsIssueItem"/>
+		</bag>
+	</class>
+	<class name="welfare.persistent.domain.stock.GoodsIssueItem" table="WFSGIITEM">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="itemNumber" column="ITEMNUMBER" type="integer" />
+		<property name="qty" column="QTY" type="big_decimal" scale="2"/>
+		<property name="unitPrice" column="UNITPRICE" type="big_decimal" scale="2"/>
+		<property name="totalPrice" column="TOTALPRICE" type="big_decimal" scale="2"/>
+		<property name="unit" column="UNIT" type="string" length="10"/>
+		<property name="warehouse" column="WAREHOUSE" type="string" length="15"/>		
+		<property name="storageLocation" column="STORAGELOC" type="storage_location" length="25"/>
+		<many-to-one name="goodsIssue" column="WFSGI_ID"/>
+		<many-to-one name="material" column="WFSMATERIAL_ID"/>
+		<bag name="stockMovements" inverse="true" order-by="ID">
+			<key column="WFSGIITEM_ID"/>
+			<one-to-many class="welfare.persistent.domain.stock.StockMovement"/>
+		</bag>
+	</class>
+	<!-- End Purchasing Section -->
+	
+	
+	<!-- Start Security section -->
+	<class name="welfare.persistent.domain.security.BudgetAuthorization" table="WFSBUDGETAUTHORIZATION">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="budgetAuth" column="BUDGETAUTH" type="string" length="255" />
+		<many-to-one name="user" column="WFSUSER_ID"/>
+	</class>	
+	<class name="welfare.persistent.domain.security.Authorization" table="WFSAUTHORIZATION">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="systemRole" column="SYSTEMROLE" type="string" length="50"/>
+		<many-to-one name="user" column="WFSUSER_ID"/>		
+	</class>
+	<class name="welfare.persistent.domain.security.User" table="WFSUSER">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="username" column="USERNAME" type="string" length="30"/>
+		<property name="password" column="USERPASSWORD" type="string" length="30"/>
+		<property name="firstName" column="FIRSTNAME" type="string" length="25"/>
+		<property name="lastName" column="LASTNAME" type="string" length="25"/>
+		<property name="mainSystemName" column="MAINSYSTEMNAME" type="string" length="50"/>
+		<property name="subSystemName" column="SUBSYSTEMNAME" type="string" length="50"/>
+		<property name="userType" column="USERTYPE" type="string" length="1"/>
+		<property name="status" column="STATUS" type="status" length="15"/>
+		<property name="warehouseCode" column="WAREHOUSECODE" type="string" length="15"/>
+		<bag name="budgetAuthorizations" inverse="true" order-by="ID">
+			<key column="WFSUSER_ID"/>
+			<one-to-many class="welfare.persistent.domain.security.BudgetAuthorization"/>
+		</bag>
+		<bag name="authorizations" inverse="true" order-by="ID">
+			<key column="WFSUSER_ID"/>
+			<one-to-many class="welfare.persistent.domain.security.Authorization"/>
+		</bag>
+		<bag name="logs" inverse="true" order-by="ID">
+			<key column="WFSUSER_ID"/>
+			<one-to-many class="welfare.persistent.domain.security.Log"/>
+		</bag>	
+	</class>
+	<class name="welfare.persistent.domain.security.Log" table="WFSLOG">
+		<id name="id" column="ID">
+			<generator class="welfare.persistent.services.HibernateCurrentTimeIDGenerator" />
+		</id>
+		<property name="dateTime" column="LOGDATE" type="timestamp"/>
+		<property name="description" column="DESCRIPTION" type="string" length="255"/>
+		<property name="logType" column="LOGTYPE" type="log_type" length="15"/>
+		<property name="ip" column="IPADDRESS" type="string" length="20"/>
+		<many-to-one name="user" column="WFSUSER_ID"/>
+	</class>
+	<!-- End Security section -->
+	
+</hibernate-mapping>
